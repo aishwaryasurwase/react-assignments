@@ -5,4 +5,18 @@
 
 .App{
   margin: 16px;
+  text-align: center;
+}
+
+.red{
+  color: red;
+}
+
+.bold{
+  font-weight: bold;
+}
+
+button:hover{
+  background-color: white;
+  color: green
 }

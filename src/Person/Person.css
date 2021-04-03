@@ -1,0 +1,9 @@
+  
+.person{
+    color: blueviolet;
+    text-align: center;
+    margin: 16px;
+    padding: 16px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
