@@ -1,7 +1,7 @@
 
 import './App.css';
 import React, { Component } from 'react'
-import Person from './Person/Person'
+import Persons from '../components/Persons/Persons'
 class App extends Component {
 
   state = {
@@ -26,6 +26,15 @@ class App extends Component {
     this.setState({ persons: updatedPersons })
   }
 
+  changePersonName = (event, id) => {
+    const personIndex = this.state.persons.findIndex((person) => person.id === id);
+    console.log(personIndex);
+
+    const persons = [...this.state.persons];
+    persons[personIndex].name = event.target.value;
+    
+    this.setState({ persons: persons })
+  }
   render() {
     const buttonStyle = {
       backgroundColor: "green",
@@ -37,12 +46,8 @@ class App extends Component {
     let persons = null;
     if (this.state.showPerson) {
       persons = (
-        <div> {
-          this.state.persons.map((person) => {
-            return <Person name={person.name} age={person.age} key={person.id}
-              deletePerson={() => this.deletePerson(person.id)} />
-          })
-        }
+        <div>
+          <Persons persons={this.state.persons} clicked={this.deletePerson} changed={this.changePersonName}></Persons>
         </div>
       )
       buttonStyle.backgroundColor = 'red'
