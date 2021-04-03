@@ -23,13 +23,9 @@ import React, { Component } from 'react';
 class person extends Component {
     render() {
         return (
-            <div className="person">
-                <input type="text" onChange={this.props.changed} value={this.props.name} />
-                <h1 onClick={this.props.click}>Person details</h1>
-                <p>Author - {this.props.name}</p>
-                <p>Age - {this.props.age}</p>
-                <p>{Math.floor(Math.random() * 10)}</p>
-                <p>{this.props.children}</p>
+            <div className="person" >
+                <p onClick={this.props.click}>I'm {this.props.name} and I am {this.props.age} years old</p>
+                <input type="text" onChange={this.props.changed} />
             </div>)
     }
 }
