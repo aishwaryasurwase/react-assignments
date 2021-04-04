@@ -1,9 +1,37 @@
-
 import './App.css';
 import React, { Component } from 'react'
 import Persons from '../components/Persons/Persons'
+import Cockpit from '../components/Cockpit/Cockpit';
+// import WithClass from '../hoc/WithClass';
+import withClass from '../hoc/WithClass';
+import Auxilliary from '../hoc/Auxilliary';
 class App extends Component {
+  constructor(props) {
+    super(props);
+    console.log("App.js constructor"); 
+  }
 
+  static getDerivedStateFromProps(props, state) {
+    console.log("Get derived state from props ", props);
+    return state;
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log("App.js should component update", nextProps);
+    return true;
+  }
+
+  componentDidMount() {
+    console.log("App.js component did mount");
+  }
+
+  componentDidUpdate() {
+    console.log("App.js component did update");
+  }
+
+  // componentWillUnmount() {
+  //   console.log("[Persons.js] componenet will unmount");
+  // }
   state = {
     persons: [
       { id: "adfd324", name: 'Aishwarya', age: 23 },
@@ -19,30 +47,21 @@ class App extends Component {
   }
 
   deletePerson = (id) => {
-    console.log(id);
     const persons = this.state.persons.slice();
     const updatedPersons = persons.filter((person) => person.id !== id);
-    // console.log(updatedPersons);
     this.setState({ persons: updatedPersons })
   }
 
   changePersonName = (event, id) => {
     const personIndex = this.state.persons.findIndex((person) => person.id === id);
-    console.log(personIndex);
 
     const persons = [...this.state.persons];
     persons[personIndex].name = event.target.value;
-    
+
     this.setState({ persons: persons })
   }
-  render() {
-    const buttonStyle = {
-      backgroundColor: "green",
-      color: 'white',
-      padding: "8px",
-      fontSize: "16px",
-    }
 
+  render() {
     let persons = null;
     if (this.state.showPerson) {
       persons = (
@@ -50,25 +69,26 @@ class App extends Component {
           <Persons persons={this.state.persons} clicked={this.deletePerson} changed={this.changePersonName}></Persons>
         </div>
       )
-      buttonStyle.backgroundColor = 'red'
     }
-    let classes = [];
-    if (this.state.persons.length <= 2) {
-      classes.push('red');
-    }
-    if (this.state.persons.length <= 1) {
-      classes.push('bold')
-    }
+
     return (
-      <div className="App">
-        <h1>Welcome to react </h1>
-        {/* <p className={th
-          is.state.persons.length < 2 ? classes : ''}>This is working</p> */}
-        <p className={classes.join(' ')}>This is working</p>
-        <button style={buttonStyle} onClick={this.togglePerson}>Toggle Person</button>
+      // <div className="App">
+      //   <Cockpit togglePerson={this.togglePerson} persons={this.state.persons} showPerson={this.state.showPerson} />
+      //   {persons}
+      // </div>
+
+      // <WithClass classes="App">
+      //   <Cockpit togglePerson={this.togglePerson} persons={this.state.persons} showPerson={this.state.showPerson} />
+      //   {persons}
+      // </WithClass>
+
+      <Auxilliary>
+        <Cockpit togglePerson={this.togglePerson} persons={this.state.persons} showPerson={this.state.showPerson} />
         {persons}
-      </div>
+      </Auxilliary>
+
     );
   }
 }
-export default App;
+// export default App;
+export default withClass(App, 'App');
